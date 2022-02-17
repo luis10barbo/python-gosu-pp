@@ -16,7 +16,11 @@ def get\*star_rating(osu_path="", mods=""):
 ```
 
 Get star rating from specific beatmap!
-Usage: - osu_path: Type path to map's .osu difficulty file. - mods: Separated by "|", write mods, following this page https://osu.ppy.sh/wiki/en/Client/File_formats/Osr*(file_format) naming convention.
+Usage:
+
+- osu_path: Type path to map's .osu difficulty file.
+- mods: Separated by "|", write mods, following this page https://osu.ppy.sh/wiki/en/Client/File_formats/Osr*(file_format) naming convention.
+
 Ex: "Hidden|HardRock", "DoubleTime", "DoubleTime|NightCore", "SuddenDeath|Perfect"
 note: NightCore requires Doubletime and Perfect requires SuddenDeath
 
