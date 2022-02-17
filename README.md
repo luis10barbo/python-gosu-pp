@@ -21,8 +21,8 @@ Usage:
 - osu_path: Type path to map's .osu difficulty file.
 - mods: Separated by "|", write mods, following this page https://osu.ppy.sh/wiki/en/Client/File_formats/Osr*(file_format) naming convention.
 
-Ex: "Hidden|HardRock", "DoubleTime", "DoubleTime|NightCore", "SuddenDeath|Perfect"
-note: NightCore requires Doubletime and Perfect requires SuddenDeath
+Ex: "Hidden|HardRock", "DoubleTime", "NoMod"
+warning: Use NightCore as DoubleTime and Perfect as SuddenDeath
 
 Returns: rounded by 2 decimals star rating float
 
