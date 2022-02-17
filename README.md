@@ -11,26 +11,28 @@ With this, you can get updated PP and Star Rating values from maps in python
 
 # Documentation
 
-def get\*star_rating(osu_path="", mods=""):
-
 ```
+def get\*star_rating(osu_path="", mods=""):
+```
+
 Get star rating from specific beatmap!
 Usage: - osu_path: Type path to map's .osu difficulty file. - mods: Separated by "|", write mods, following this page https://osu.ppy.sh/wiki/en/Client/File_formats/Osr*(file_format) naming convention.
 Ex: "Hidden|HardRock", "DoubleTime", "DoubleTime|NightCore", "SuddenDeath|Perfect"
 note: NightCore requires Doubletime and Perfect requires SuddenDeath
 
 Returns: rounded by 2 decimals star rating float
-```
 
+```
 def get_pp(osu_path="", mods="NoMod", max_combo="-1", n300s="-1", n100s="0", n50s="", nmisses=""):
-
 ```
+
 Get PP from specific beatmap!
 Usage:
+
 - osu_path: Type path to map's ".osu" difficulty file.
 - mods: Separated by "|", write mods, following this page https://osu.ppy.sh/wiki/en/Client/File_formats/Osr_(file_format) naming convention.
-Ex: "Hidden|HardRock", "DoubleTime", "DoubleTime|NightCore", "SuddenDeath|Perfect"
-note: NightCore requires Doubletime and Perfect requires SuddenDeath
+  Ex: "Hidden|HardRock", "DoubleTime", "DoubleTime|NightCore", "SuddenDeath|Perfect"
+  note: NightCore requires Doubletime and Perfect requires SuddenDeath
 - combo: Type max combo achieved at play as string. Default = -1 , that means, FC.
 - n300s: Type number of 300s achieved as string. Default = -1, that means, calculate 300 relative to other hits, starting on SS
 - n100s: Type number of 100s achieved as string.
@@ -38,4 +40,3 @@ note: NightCore requires Doubletime and Perfect requires SuddenDeath
 - nmissess: Type number of misses achieved as string.
 
 Returns: rounded by 2 decimals pp float
-```
