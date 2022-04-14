@@ -20,11 +20,6 @@ import (
 
 import "github.com/Wieku/gosu-pp/beatmap/difficulty"
 
-type beatmapInfo struct {
-	osrPath    string
-	modsString string
-}
-
 func stringToInt(stringInt string) (int, error) {
 	convertedStringValue := 0
 
