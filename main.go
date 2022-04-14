@@ -21,9 +21,8 @@ import (
 import "github.com/Wieku/gosu-pp/beatmap/difficulty"
 
 type beatmapInfo struct {
-	osrPath string
+	osrPath    string
 	modsString string
-
 }
 
 func stringToInt(stringInt string) (int, error) {
@@ -36,24 +35,54 @@ func stringToInt(stringInt string) (int, error) {
 	return convertedStringValue, err
 }
 
-func stringToMods(modsString string) (difficulty.Modifier, error){
+func stringToMods(modsString string) (difficulty.Modifier, error) {
+	// Add NoMod to mods if mods == ""
 	if modsString == "" {
-		modsString = "DoubleTime|Hidden"
+		modsString = "None"
 	}
 
 	// Convert string into int
-	allModNumbers := []string{"0", "1", "2", "4", "8", "16", "32", "64", "64", "128", "256", "512", "1024", "2048", "4096", "8192", "16384"}
-	mods := []string{"None", "NoMod", "Easy", "TouchDevice", "Hidden", "HardRock", "SuddenDeath", "DoubleTime", "Relax", "HalfTime", "Nightcore", "Flashlight", "AutoPlay", "SpunOut", "Replay2", "Perfect"}
+	// allModNumbers := []string{"0", "0", "1", "2", "4", "8", "16", "32", "64", "64", "128", "256", "512", "1024", "2048", "4096", "8192", "16384"}
+	// mods := []string{"None", "ScoreV2",  "NoFail", "Easy", "TouchDevice", "Hidden", "HardRock", "SuddenDeath", "DoubleTime", "Relax", "HalfTime", "Nightcore", "Flashlight", "AutoPlay", "SpunOut", "Relax2", "Perfect"}
+	modIntValues := map[string]string {
+		"None" : "0",
+		"NoFail" : "1",
+		"Easy" : "2",
+		"TouchDevice" : "4",
+		"Hidden": "8",
+		"HardRock" : "16",
+		"SuddenDeath": "32",
+		"DoubleTime" : "64",
+		"Relax" : "128",
+		"NightCore" : "512",
+		"HalfTime" : "512",
+		"FlashLight" : "1024",
+		"AutoPlay" : "2048",
+		"SpunOut" : "4096",
+		"Relax2" : "8192",
+		"Perfect" : "16384",
+	}
+
+	// Get keys from modsIntValues
+	mods := make([]string, len(modIntValues))
+	i := 0
+	for key := range modIntValues {
+		mods[i] = key
+		i++
+	}
 
 	modsConverted := modsString
-	i := 0
-	for i = 0 ; i < 16 ; i += 1 {
-		modsConverted = strings.Replace(modsConverted, mods[i], allModNumbers[i], 1) 
-		
-	}
-	modsConverted = string(modsConverted)
+	
+	
+	for i = 0; i < len(modIntValues); i += 1 {
+		modsConverted = strings.Replace(modsConverted, mods[i], modIntValues[mods[i]], 1)
 
-	// Sum mods 
+	}
+
+	modsConverted = string(modsConverted)
+	fmt.Println(modsConverted)
+
+	// Sum mods
 	modsSplit := strings.Split(modsConverted, "|")
 	modsSum := 0
 	for _, value := range modsSplit {
@@ -62,14 +91,14 @@ func stringToMods(modsString string) (difficulty.Modifier, error){
 		if err != nil {
 			log.Fatal(err)
 		}
-		
+
 		// Sum up modsSum with convertedStringValue
 		modsSum += convertedValue
 	}
 	modsSumDifficulty := difficulty.Modifier(modsSum)
 	return modsSumDifficulty, nil
 	// SV2 = 536870912
-	// PF = 16384 
+	// PF = 16384
 	// RX2 = 8192 AUTOPILOT
 	// SO = 4096
 	// AP = 2048
@@ -87,13 +116,13 @@ func stringToMods(modsString string) (difficulty.Modifier, error){
 	// beatmap.Difficulty.SetMods(difficulty.ScoreV2)
 }
 
-func getStars(osuPath string, modsInt difficulty.Modifier) float64{
+func getStars(osuPath string, modsInt difficulty.Modifier) float64 {
 	// Open osu File
-	osuFile, err := os.Open(osuPath) 
+	osuFile, err := os.Open(osuPath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	// Parse beatmap
 	beatmap, err := beatmap.ParseFromReader(osuFile)
 	if err != nil {
@@ -105,19 +134,19 @@ func getStars(osuPath string, modsInt difficulty.Modifier) float64{
 
 	// Calculate stars
 	stars := (osu.CalculateSingle(beatmap.HitObjects, beatmap.Difficulty))
-	
+
 	// Return star rating
 	return stars.Total
 }
 
-func getStarsAndPP(osuPath string, modsInt difficulty.Modifier, maxCombo, n300s, n100s, n50s, nmisses int) (float64, float64){
+func getStarsAndPP(osuPath string, modsInt difficulty.Modifier, maxCombo, n300s, n100s, n50s, nmisses int) (float64, float64) {
 
 	// Open osu File
-	osuFile, err := os.Open(osuPath) 
+	osuFile, err := os.Open(osuPath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	// Parse beatmap
 	beatmap, err := beatmap.ParseFromReader(osuFile)
 	if err != nil {
@@ -130,7 +159,7 @@ func getStarsAndPP(osuPath string, modsInt difficulty.Modifier, maxCombo, n300s,
 	// Calculate stars
 	stars := (osu.CalculateSingle(beatmap.HitObjects, beatmap.Difficulty))
 
-	if n300s < 0{
+	if n300s < 0 {
 		n300s = stars.ObjectCount
 	}
 
@@ -143,7 +172,7 @@ func getStarsAndPP(osuPath string, modsInt difficulty.Modifier, maxCombo, n300s,
 }
 
 //export helloWorld
-func helloWorld(namePtr *C.char, ) *C.char{
+func helloWorld(namePtr *C.char) *C.char {
 	name := C.GoString(namePtr)
 	hello := ("Hello" + name)
 	helloString := C.CString(hello)
@@ -151,7 +180,7 @@ func helloWorld(namePtr *C.char, ) *C.char{
 }
 
 //export pythonGetStars
-func pythonGetStars(pathPtr *C.char, modsPtr *C.char) *C.char{
+func pythonGetStars(pathPtr *C.char, modsPtr *C.char) *C.char {
 	pathString := C.GoString(pathPtr)
 	modsString := C.GoString(modsPtr)
 
@@ -159,19 +188,19 @@ func pythonGetStars(pathPtr *C.char, modsPtr *C.char) *C.char{
 		log.Fatal("String empty")
 	}
 	modsInt, err := stringToMods(modsString)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	starRating := getStars(pathString, modsInt)
 	starRatingString := fmt.Sprintf("%v", starRating)
 	starRatingCString := C.CString(starRatingString)
-  
+
 	return starRatingCString
 }
 
 //export pythonGetStarsAndPP
-func pythonGetStarsAndPP(pathPtr, modsPtr, comboPtr, n300sPtr, n100sPtr, n50sPtr, nmissesPtr *C.char) *C.char{
+func pythonGetStarsAndPP(pathPtr, modsPtr, comboPtr, n300sPtr, n100sPtr, n50sPtr, nmissesPtr *C.char) *C.char {
 	pathString := C.GoString(pathPtr)
 	modsString := C.GoString(modsPtr)
 	comboInteger, _ := stringToInt(C.GoString(comboPtr))
@@ -185,23 +214,24 @@ func pythonGetStarsAndPP(pathPtr, modsPtr, comboPtr, n300sPtr, n100sPtr, n50sPtr
 	}
 
 	modsInt, err := stringToMods(modsString)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	_, ppTotal := getStarsAndPP(pathString, modsInt, comboInteger, n300sInteger, n100sInteger, n50sInteger, nmissesInteger)
 
-	// Convert float to string 
+	// Convert float to string
 	ppTotalString := fmt.Sprintf("%v", ppTotal)
 
 	// Convert string to CString
 	ppTotalCString := C.CString(ppTotalString)
-	
+
 	return ppTotalCString
 }
 
 func main() {
-	mods, _ := stringToMods("DoubleTime|Easy")
+	// This will only be executed if you run this file directly from go
+	mods, _ := stringToMods("DoubleTime|Easy|NightCore")
 	fmt.Println(mods)
 	getStars("./gosu-pp/test/Avenged Sevenfold - Save Me (Drummer) [Tragedy].osu", mods)
 }
