@@ -5,6 +5,13 @@ Little implementation of wieku's gosu-pp on python
 With this, you can get updated PP and Star Rating values from maps in python
 (btw, i'm not sure if it works without Golang installed)
 
+btw2: i have no fucking clue if i'm coding it wrong, i've learned the bare minimum of go to make this
+
+If you want to make any changes to main.go file(the one that handles the conversion), to build it into c code (the one that will be read by python) you just need to type:
+```
+go build -o main.so -buildmode=c-shared main.go
+```
+
 # Credits
 
 [wieku's gosu-pp](https://github.com/Wieku/gosu-pp) This project is literally a C "bridge" to connect Python and his GO code
@@ -44,3 +51,5 @@ Usage:
 - nmissess: Type number of misses achieved as string.
 
 Returns: rounded by 2 decimals pp float
+
+
