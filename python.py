@@ -61,7 +61,7 @@ def get_pp(osu_path="", mods="NoMod", max_combo="-1", n300s="-1", n100s="0", n50
 
 def run():
     path = r"C:\Users\luis10barbo\AppData\Local\osu!\Songs\795379 Utsu-P - Galapagos de Warui ka\Utsu-P - Galapagos de Warui ka (DendyHere) [Akitoshi's Extreme].osu"
-    mods = "HardRock"
+    mods = "HardRock|Hidden"
     b = get_star_rating(osu_path=path, mods=mods)
     print(b, type(b))
 
