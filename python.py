@@ -1,8 +1,9 @@
 import ctypes
+import os
 
-library = ctypes.cdll.LoadLibrary('./main.so')
+library = ctypes.cdll.LoadLibrary(os.path.join(str(os.path.abspath(__file__)).rsplit(os.sep , 1)[0], "main.so"))
 
-def get_star_rating(osu_path="", mods=""):
+def get_star_rating(osu_path="", mods="NoMod"):
     """
     Get star rating from specific beatmap!
     Usage:
@@ -14,19 +15,27 @@ def get_star_rating(osu_path="", mods=""):
     Returns: rounded by 2 decimals star rating float
     """
     
+    # Run checks if valid arguments
+    if osu_path == "":
+        return None, "No osu_path set"
+    
+    if mods[0] == "|":
+        mods = mods.replace("|", "", 1)
+    
     # Setup bridge
     go_get_star = library.pythonGetStars
     go_get_star.restype = ctypes.c_void_p
     
     # Run commands
     result = go_get_star(osu_path.encode("utf-8"), mods.encode("utf-8"))
-
+    
     # Transform result
     result_bytes = ctypes.string_at(result)
-    result_string = result_bytes.decode("utf-8")
+    result_string = result_bytes.decode("utf-8")    
     result_rounded = float("{0:.2f}".format(float(result_string)))
+
     
-    return result_rounded
+    return result_rounded, None
 
 def get_pp(osu_path="", mods="NoMod", max_combo="-1", n300s="-1", n100s="0", n50s="", nmisses=""):
     """
@@ -44,6 +53,12 @@ def get_pp(osu_path="", mods="NoMod", max_combo="-1", n300s="-1", n100s="0", n50
     
     Returns: rounded by 2 decimals pp float
     """
+    # Run checks if valid arguments
+    if osu_path == "":
+        return None, "No osu_path set"
+
+    if mods[0] == "|":
+        mods = mods.replace("|", "", 1)
     
     # Setup bridge
     go_get_pp = library.pythonGetStarsAndPP
@@ -55,9 +70,10 @@ def get_pp(osu_path="", mods="NoMod", max_combo="-1", n300s="-1", n100s="0", n50
     # Transform result
     result_bytes = ctypes.string_at(result)
     result_string = result_bytes.decode("utf-8")
+    
     result_rounded = float("{0:.2f}".format(float(result_string)))
     
-    return result_rounded
+    return result_rounded, None
 
 def run():
     path = r"C:\Users\luis10barbo\AppData\Local\osu!\Songs\795379 Utsu-P - Galapagos de Warui ka\Utsu-P - Galapagos de Warui ka (DendyHere) [Akitoshi's Extreme].osu"
