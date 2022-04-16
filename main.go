@@ -41,6 +41,7 @@ func stringToMods(modsString string) (difficulty.Modifier, error) {
 	// mods := []string{"None", "ScoreV2",  "NoFail", "Easy", "TouchDevice", "Hidden", "HardRock", "SuddenDeath", "DoubleTime", "Relax", "HalfTime", "Nightcore", "Flashlight", "AutoPlay", "SpunOut", "Relax2", "Perfect"}
 	modIntValues := map[string]string {
 		"None" : "0",
+		"NoMod" : "0",
 		"NoFail" : "1",
 		"Easy" : "2",
 		"TouchDevice" : "4",
@@ -226,7 +227,7 @@ func pythonGetStarsAndPP(pathPtr, modsPtr, comboPtr, n300sPtr, n100sPtr, n50sPtr
 
 func main() {
 	// This will only be executed if you run this file directly from go
-	mods, _ := stringToMods("DoubleTime|Easy|NightCore")
+	mods, _ := stringToMods("NoMod")
 	fmt.Println(mods)
 	getStars("./gosu-pp/test/Avenged Sevenfold - Save Me (Drummer) [Tragedy].osu", mods)
 }
