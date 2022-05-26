@@ -50,9 +50,9 @@ func stringToMods(modsString string) (difficulty.Modifier, error) {
 		"SuddenDeath": "32",
 		"DoubleTime" : "64",
 		"Relax" : "128",
-		"NightCore" : "512",
+		"Nightcore" : "512",
 		"HalfTime" : "512",
-		"FlashLight" : "1024",
+		"Flashlight" : "1024",
 		"AutoPlay" : "2048",
 		"SpunOut" : "4096",
 		"Relax2" : "8192",
@@ -76,7 +76,6 @@ func stringToMods(modsString string) (difficulty.Modifier, error) {
 	}
 
 	modsConverted = string(modsConverted)
-	fmt.Println(modsConverted)
 
 	// Sum mods
 	modsSplit := strings.Split(modsConverted, "|")
@@ -189,7 +188,7 @@ func pythonGetStars(pathPtr *C.char, modsPtr *C.char) *C.char {
 	}
 
 	starRating := getStars(pathString, modsInt)
-	starRatingString := fmt.Sprintf("%v", starRating)
+	starRatingString := fmt.Sprintf("%v", starRating, )
 	starRatingCString := C.CString(starRatingString)
 
 	return starRatingCString
@@ -228,6 +227,5 @@ func pythonGetStarsAndPP(pathPtr, modsPtr, comboPtr, n300sPtr, n100sPtr, n50sPtr
 func main() {
 	// This will only be executed if you run this file directly from go
 	mods, _ := stringToMods("NoMod")
-	fmt.Println(mods)
 	getStars("./gosu-pp/test/Avenged Sevenfold - Save Me (Drummer) [Tragedy].osu", mods)
 }
