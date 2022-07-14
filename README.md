@@ -3,7 +3,8 @@
 Little implementation of wieku's gosu-pp on python
 
 With this, you can get updated PP and Star Rating values from maps in python
-(btw, i'm not sure if it works without Golang installed)
+~~(btw, i'm not sure if it works without Golang installed)~~
+THIS WORKS WITHOUT GOLANG INSTALLED
 
 btw2: i have no fucking clue if i'm coding it wrong, i've learned the bare minimum of go to make this
 
